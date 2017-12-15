@@ -1,49 +1,6 @@
-# Memory Game
+frontend-nanodegree-arcade-game
+===============================
 
-## Table of Contents
+Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
 
-* [Getting started](#getting-started)
-* [Technical details](#technical-details)
-* [Author](#author)
-* [License](#license)
-* [Contributing](#contributing)
-* [Further reading](#further-reading)
-
-## Getting started
-
-### Description
-
-By playing memory game the user has to pick at least two cards, if the two matched it stays open otherwise flipping back. By picking pairs the movements are counted and displayed along with stars which represents the performance of the given player.
-The game ends when all pair found.
-
-### Prerequisites
-
-This game runs in any modern browser, I suggest chrome.
-
-### Installing
-
-No required steps to install the game, just open it in a modern browser and enjoy.
-
-### Compatibility
-
-The application is compatible with all modern mobile and desktop browsers. Not recommended to use old browsers.
-
-## Technical details
-
-The game is written in html, css and javascript. The main logic implemented in vanilla javascript in order to reduce de dependences.
-
-## Author
-
-Tibor Juhasz (tibijuhasz@gmail.com)
-
-## License
-
-This project is licensed under the MIT License
-
-## Contributing
-
-Please read CONTRIBUTING.md for details on the code of conduct, and the process for submitting pull requests.
-
-## Further reading
-
-* https://en.wikipedia.org/wiki/Concentration_(game)#Strategy
+For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
