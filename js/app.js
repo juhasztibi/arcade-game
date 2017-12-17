@@ -1,11 +1,18 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.dimensions = {
+        width: 101,
+        height: 171
+    };
 };
 
 // Update the enemy's position, required method for game
@@ -14,8 +21,16 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = 100;
-    this.y = 100;
+
+    if (this.x < 505) {
+        this.x += this.speed * dt;
+    } else {
+        this.x = -100;
+    }
+
+    if(this.x < (player.x + player.dimensions.width / 2) && this.x + (this.dimensions.width / 2) > player.x && this.y < (player.y + player.dimensions.height / 2) && this.y + (this.dimensions.height / 2) > player.y) {
+        console.log('lost');
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -30,6 +45,10 @@ Enemy.prototype.render = function() {
 var Player = function() {
     this.x = 200;
     this.y = 320;
+    this.dimensions = {
+        width: 101,
+        height: 171
+    }
 };
 
 // Update the player's position
@@ -72,8 +91,18 @@ Player.prototype.handleInput = function(direction) {
 let allEnemies = [];
 
 // create enemies
-for (var i = 0; i < 5; i++) {
-    let enemy = new Enemy();
+for (var i = 0; i < 9; i++) { //  should place the enemies randomly on the board
+    let enemy;
+
+    if (i <= 3) {
+        enemy = new Enemy(-100, 60, Math.floor(Math.random() * 100));
+    }
+    if (i > 3 && i <= 6) {
+        enemy = new Enemy(-100, 140, Math.floor(Math.random() * 100));
+    }
+    if (i > 6) {
+        enemy = new Enemy(-100, 225, Math.floor(Math.random() * 100));
+    }
     allEnemies.push(enemy);
 }
 
