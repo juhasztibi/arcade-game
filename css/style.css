@@ -1,3 +1,16 @@
 body {
     text-align: center;
 }
+
+.infopanel {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.score,
+.life {
+    width: 50%;
+    font-size: 20px;
+}

@@ -10,8 +10,8 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.speed = speed;
     this.dimensions = {
-        width: 101,
-        height: 171
+        width: 99,
+        height: 70
     };
 };
 
@@ -28,8 +28,14 @@ Enemy.prototype.update = function(dt) {
         this.x = -100;
     }
 
-    if(this.x < (player.x + player.dimensions.width / 2) && this.x + (this.dimensions.width / 2) > player.x && this.y < (player.y + player.dimensions.height / 2) && this.y + (this.dimensions.height / 2) > player.y) {
-        console.log('lost');
+    if((this.x >= (player.x - player.dimensions.width) && this.x <= (player.x + player.dimensions.width)) && (this.y >= player.y && this.y <= (player.y + player.dimensions.height / 2))) {
+        game.decriseLife();
+        if (game.getLife() > 0) {
+            game.restart();
+        } else {
+            alert('Game over!')
+            game.reset();
+        }
     }
 };
 
@@ -44,17 +50,18 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.x = 200;
-    this.y = 320;
+    this.y = 380;
     this.dimensions = {
-        width: 101,
-        height: 171
+        width: 66,
+        height: 84
     }
 };
 
 // Update the player's position
 Player.prototype.update = function(dt) {
     if(this.y < 20) {
-        console.log('won');
+        game.setScore();
+        game.restart();
     }
 };
 
@@ -70,18 +77,55 @@ Player.prototype.render = function() {
 // Handle user input
 Player.prototype.handleInput = function(direction) {
     if(direction == 'left' && this.x > 0) {
-        this.x -= 50;
+        this.x -= 100;
     }
-    if(direction == 'right' && this.x < 400) {
-        this.x += 50;
+    if(direction == 'right' && this.x < 380) {
+        this.x += 100;
     }
     if(direction == 'up' && this.y > 3) {
-        this.y -= 50;
+        this.y -= 80;
     }
-    if(direction == 'down' && this.y < 400) {
-        this.y += 50;
+    if(direction == 'down' && this.y < 380) {
+        this.y += 80;
     }
 };
+
+var scoreElement = document.getElementById('score');
+var lifeElement = document.getElementById('life');
+
+var Game = function() {
+    this.score = 0;
+    this.life = 5;
+};
+
+Game.prototype.setScore = function() {
+    scoreElement.innerHTML = ++this.score;
+};
+
+Game.prototype.decriseLife = function() {
+    lifeElement.innerHTML = --this.life;
+};
+
+Game.prototype.getLife = function() {
+    return this.life;
+}
+
+Game.prototype.restart = function() {
+    player.x = 200;
+    player.y = 380;
+}
+
+Game.prototype.reset = function() {
+    this.life = 5;
+    this.score = 0;
+    player.x = 200;
+    player.y = 380;
+
+    scoreElement.innerHTML = this.score;
+    lifeElement.innerHTML = this.life;
+};
+
+var game = new Game();
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -90,21 +134,24 @@ Player.prototype.handleInput = function(direction) {
 // Store enemies
 let allEnemies = [];
 
-// create enemies
-for (var i = 0; i < 9; i++) { //  should place the enemies randomly on the board
-    let enemy;
+// Create enemies
+let enemyFirstRow1 = new Enemy(-100, 60, 50);
+let enemyFirstRow2 = new Enemy(-100, 60, 90);
 
-    if (i <= 3) {
-        enemy = new Enemy(-100, 60, Math.floor(Math.random() * 100));
-    }
-    if (i > 3 && i <= 6) {
-        enemy = new Enemy(-100, 140, Math.floor(Math.random() * 100));
-    }
-    if (i > 6) {
-        enemy = new Enemy(-100, 225, Math.floor(Math.random() * 100));
-    }
-    allEnemies.push(enemy);
-}
+let enemySecondRow1 = new Enemy(-100, 140, 30);
+let enemySecondRow2 = new Enemy(-100, 140, 110);
+
+let enemyThirdRow1 = new Enemy(-100, 225, 100);
+let enemyThirdRow2 = new Enemy(-100, 225, 20);
+
+allEnemies.push(enemyFirstRow1);
+allEnemies.push(enemyFirstRow2);
+
+allEnemies.push(enemySecondRow1);
+allEnemies.push(enemySecondRow2);
+
+allEnemies.push(enemyThirdRow1);
+allEnemies.push(enemyThirdRow2);
 
 // init player
 let player = new Player();
