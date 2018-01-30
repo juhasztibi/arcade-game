@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -8,7 +8,7 @@ var Enemy = function(x, y, speed) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    this.speed = Math.floor(Math.random() * 100) * 4;
     this.dimensions = {
         width: 99,
         height: 70
@@ -17,6 +17,7 @@ var Enemy = function(x, y, speed) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+// Check the collision and reset or finish the game
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -47,7 +48,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
+// Define player start position and dimesions
 var Player = function() {
     this.x = 200;
     this.y = 380;
@@ -65,6 +66,7 @@ Player.prototype.update = function(dt) {
     }
 };
 
+// Set the character
 Player.prototype.setChar = function(char) {
     this.sprite = 'images/char-' + char + '.png';
 };
@@ -93,28 +95,34 @@ Player.prototype.handleInput = function(direction) {
 var scoreElement = document.getElementById('score');
 var lifeElement = document.getElementById('life');
 
+// Create game class to store the given game's score and lifes
 var Game = function() {
     this.score = 0;
     this.life = 5;
 };
 
+// Set the score of player
 Game.prototype.setScore = function() {
     scoreElement.innerHTML = ++this.score;
 };
 
+// Decrise the life of player
 Game.prototype.decriseLife = function() {
     lifeElement.innerHTML = --this.life;
 };
 
+// Get the current life of player
 Game.prototype.getLife = function() {
     return this.life;
 }
 
+// Move the given player back to the start point
 Game.prototype.restart = function() {
     player.x = 200;
     player.y = 380;
 }
 
+// Reset the whole game, score, player position, life back to default, update the view of score and life
 Game.prototype.reset = function() {
     this.life = 5;
     this.score = 0;
@@ -125,6 +133,7 @@ Game.prototype.reset = function() {
     lifeElement.innerHTML = this.life;
 };
 
+// Create new game instance
 var game = new Game();
 
 // Now instantiate your objects.
@@ -134,26 +143,23 @@ var game = new Game();
 // Store enemies
 let allEnemies = [];
 
-// Create enemies
-let enemyFirstRow1 = new Enemy(-100, 60, 50);
-let enemyFirstRow2 = new Enemy(-100, 60, 90);
+// Create enemies and store them in the allEnemies array
+for (var i = 0; i < 6; i++) {
+    let enemy;
 
-let enemySecondRow1 = new Enemy(-100, 140, 30);
-let enemySecondRow2 = new Enemy(-100, 140, 110);
+    if (i < 2) {
+        enemy = new Enemy(-100, 60);
+    }
+    if (i >= 2 && i < 4) {
+        enemy = new Enemy(-100, 140);
+    }
+    if (i >= 4) {
+        enemy = new Enemy(-100, 225);
+    }
+    allEnemies.push(enemy);
+}
 
-let enemyThirdRow1 = new Enemy(-100, 225, 100);
-let enemyThirdRow2 = new Enemy(-100, 225, 20);
-
-allEnemies.push(enemyFirstRow1);
-allEnemies.push(enemyFirstRow2);
-
-allEnemies.push(enemySecondRow1);
-allEnemies.push(enemySecondRow2);
-
-allEnemies.push(enemyThirdRow1);
-allEnemies.push(enemyThirdRow2);
-
-// init player
+// init player with boy character
 let player = new Player();
 player.setChar('boy');
 
